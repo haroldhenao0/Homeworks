@@ -1,0 +1,42 @@
+import React from "react"
+import {useCounter} from '../hooks/useCounter'
+import{useFetch} from '../hooks/useFetch'
+
+export const MultipleCustomsHooks = () => {
+    const {counter, increment} = useCounter(1)
+    const{data, isLoading, hasError} = useFetch(`https://breakingbadapi.com/api/quotes/${counter}`)
+
+    return(
+        <>
+            <h1>MultipleCustomsHooks</h1>
+            <hr/>
+            {
+                isLoading ? (
+                    <div className='alert alert-info text-center'>
+                        Loading...
+                    </div>
+                ) :(
+                    <blockquote className='blockquote text-end'>
+                        <p className='mb-1'>{data[0]?.quote}</p>
+                        <footer className='blockquote-footer'>{data[0]?.author}</footer>
+                    </blockquote>
+                )
+            }
+            <button className='btn btn-primary' onClick={()=> increment()}>Next Quote</button>
+        </>
+    )
+}
+
+const getGifs = async (category) => {
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=5Hb35YQWITfCSsB0JjKsNJTNKXUS2ZEt&q=${category}&limit=25&offset=0&rating=g&lang=en`
+    const resp = await fetch(url)
+    const { data } = await resp.json()
+    const gifs = data.map( img => {
+        return {
+            id: img.id,
+            title: img.title,
+            url: img.images.downsized_medium.url
+        }
+    })
+    return gifs
+}
