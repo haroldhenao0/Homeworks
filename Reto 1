@@ -1,0 +1,22 @@
+Create a new function in Regular and Arrow types, which should receive a number and will print in console if that number is either odd or even.
+
+Arrow Function:
+
+const determinaOddEven = (num) => {
+  if(num % 2 === 0) {
+    console.log(num + " es par");
+  } else {
+    console.log(num + " es impar");
+  }
+}
+
+Regular Function:
+
+function determinaOddEven(num) {
+  if(num % 2 === 0) {
+    console.log(num + " es par");
+  } else {
+    console.log(num + " es impar");
+  }
+}
+
