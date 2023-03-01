@@ -1,0 +1,31 @@
+Create a new customHookcalled useCounter
+Implement followed methods tohandle counter:
+1. Increment
+2. Decrement
+3. Reset
+Use above hook into your current component
+
+import{useEffect, useState} from "react";
+
+export const useCounter = (val) => {
+    const [counter, setCounter] = useState(value);
+
+    const handleAdd = () => {
+        setCounter(counter + 1)
+    }
+    
+    const handleSubstract = () => {
+        setCounter(counter - 1)
+    }
+
+    const handleReset = () => {
+        setCounter(val)
+    }
+
+    return{
+        count: counter,
+        add: handleAdd,
+        substract: handleSubstract,
+        reset: handleReset
+    }   
+}
