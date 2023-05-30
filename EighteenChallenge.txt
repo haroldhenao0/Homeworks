@@ -1,0 +1,73 @@
+const actualizarTask = async (req, res = express.response) => {
+    const taskId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        let task = await Task.findById(taskId);
+
+        if (!task) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Task no encontrado',
+            });
+        }
+
+        if (task.user.toString() !== userId) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No autorizado',
+            });
+        }
+
+        task = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
+
+        res.json({
+            ok: true,
+            task,
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error interno',
+        });
+    }
+}
+
+const eliminarTask = async (req, res = express.response) => {
+    const taskId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        let task = await Task.findById(taskId);
+
+        if (!task) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Task no encontrado',
+            });
+        }
+
+        if (task.user.toString() !== userId) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No autorizado',
+            });
+        }
+
+        await Task.findByIdAndDelete(taskId);
+
+        res.json({
+            ok: true,
+            msg: 'Task eliminado',
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error interno',
+        });
+    }
+}
